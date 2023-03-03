@@ -1,0 +1,24 @@
+<div class="container">
+<div class="my-5" *ngIf="dummyUserData"
+  [style.border]="dummyUserData.gender === 'male' ? '3px solid blue' : '3px solid pink'">
+  <div>
+    <img class="w-50 h-50" src="{{dummyUserData.picture}}" alt="">
+    <br><br>
+  </div>
+  <div class="container">
+    <h3>{{ dummyUserData.title + "." + dummyUserData.firstName + " " + dummyUserData.lastName }}</h3>
+    <p>{{dummyUserData.phone | phone }}</p>
+    <p>{{dummyUserData.email}}</p>
+    <p>{{dummyUserData.gender}}</p>
+    <p>DOB: {{dummyUserData.dateOfBirth | date:'dd/MM/yyyy'}} (Age: {{ calculateAge(dummyUserData.dateOfBirth) }})</p>
+    <p>{{dummyUserData.location.street}},
+      {{dummyUserData.location.city}},
+      {{dummyUserData.location.state}},
+      {{dummyUserData.location.country}},
+      {{dummyUserData.location.timezone}}
+    </p>
+    <p>Registered Date: {{ dummyUserData.registerDate | date: 'dd/MM/yyyy, h:mm a' }}</p>
+    <p>Updated Date: {{ dummyUserData.updatedDate | date: 'dd/MM/yyyy, h:mm a' }}</p>
+  </div>
+  </div>
+</div>

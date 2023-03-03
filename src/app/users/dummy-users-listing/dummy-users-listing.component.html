@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-end my-1 p-2">
+  <label for="dropdown">Number of profiles per page:</label>
+  <select id="dropdown" [(ngModel)]="selectedLimit" 
+    (ngModelChange)="selectedLimitChange()">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+  </select>
+</div>
+
+<div class="d-flex flex-wrap" *ngIf="dummyUsersList">
+  <div *ngFor="let dummyUser of dummyUsersList| paginate: { itemsPerPage: selectedLimit, currentPage: p, totalItems: total }"
+    class="card mx-4 my-4" style="width: 20%;">
+    <img src="{{dummyUser.picture}}" [routerLink]="['/single-dummyuser', dummyUser.id]" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{dummyUser.title+"."+ dummyUser.firstName + " " + dummyUser.lastName }}</h5>
+      <p class="card-text"></p>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+</div>
+
+<div class="d-flex justify-content-center my-1">
+  <p>{{ (p - 1) * selectedLimit + 1 }} to {{ p * selectedLimit > total ? total : p * selectedLimit
+    }} of {{ total }} items</p>
+</div>

@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-between">
+    <div class="my-1 p-2">
+        <label for="trip-range">Select Trip Range: </label>
+        <select id="trip-range" (change)="onTripsFilterChange($event)">
+            <option value="all">All trips</option>
+            <option value="lessThan100">Less than 100</option>
+            <option value="100to200">100 to 200</option>
+            <option value="greaterThan200">Greater than 200</option>
+        </select>
+    </div>
+
+    <div class="my-1 p-2">
+        <label for="airlines">Airlines:</label>
+        <select id="airlines" (change)="onAirlinesFilterChange($event)">
+            <option value="allairlines">All Airlines</option>
+            <option value="Eva Air">Eva Air</option>
+            <option value="Cathay Pacific">Cathay Pacific</option>
+            <option value="Emirates">Emirates</option>
+            <option value="Qantas">Qantas</option>
+        </select>
+    </div>
+
+    <div class="my-1 p-2">
+        <label for="dropdown">Number of profiles per page:</label>
+        <select id="dropdown" [(ngModel)]="selectedLimit" (ngModelChange)="selectedLimitChange()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+</div>
+
+<table class="container table mt-5 bordered">
+    <thead>
+        <tr>
+            <th>Logo</th>
+            <th>Name</th>
+            <th>Trips</th>
+            <th>Airline</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="passengersList">
+        <tr class="table-row"
+            *ngFor="let passenger of passengersListFiltered| paginate: { itemsPerPage: selectedLimit, currentPage: p, totalItems: total }">
+
+            <td><img class="logo" src="{{passenger.airline[0].logo}}" alt=""></td>
+            <!-- <td><a class="text-decoration-none" (click)="openModal(passenger)">{{passenger.name}}</a>
+            </td> -->
+            <td>
+                <ng-container *ngIf="!passenger.editing; else editingBlock">
+                    <a class="text-decoration-none" [routerLink]="['/airlines/single-passenger', passenger._id]">{{passenger.name}}</a>
+                </ng-container>
+                <ng-template #editingBlock>
+                    <input type="text" [(ngModel)]="passenger.newName">
+                    <button (click)="saveNewName(passenger)">Submit</button>
+                </ng-template>
+            </td>
+            <td>{{passenger.trips}}</td>
+            <td>{{passenger.airline[0].name}}</td>
+            <td> <button class="btn btn-dark" (click)="startEditing(passenger)">Edit</button>
+                <button class="btn btn-danger ms-2" (click)="deletePassenger(passenger._id)">Delete</button>
+            </td>
+        </tr>
+        <tr *ngIf="showNoResults">
+            <td class="text-danger">No Results for the selected filter</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+</div>
+
+<div class="d-flex justify-content-center my-1">
+    <p>{{ (p - 1) * selectedLimit + 1 }} to {{ p * selectedLimit > total ? total : p * selectedLimit
+        }} of {{ total }} items</p>
+</div>
+
+<!-- <ng-template #modalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title">{{passengerDetails.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef?.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Country: {{passengerDetails.airline[0].country}}</p>
+        <p>{{passengerDetails.airline[0].slogan}}</p>
+        <p>Headquarters: {{passengerDetails.airline[0].head_quaters}}</p>
+        <p>Established: {{passengerDetails.airline[0].established}}</p>
+        <p>Website: <a class="text-decoration-none">{{passengerDetails.airline[0].website}}</a></p>
+    </div>
+</ng-template> -->

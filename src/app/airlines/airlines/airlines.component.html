@@ -1,0 +1,29 @@
+
+   <table class="table mt-5">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Country</th>
+        <th>Logo</th>
+        <th>Slogan</th>
+        <th>Headquarters</th>
+        <th>Website</th>
+        <th>Established</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let airline of airlinesList">
+        <td>{{airline.id}}</td>
+        <td>{{airline.name}}</td>
+        <td>{{airline.country}}</td>
+        <td class="logo"><img src="{{airline.logo}}" alt=""></td>
+        <td>{{airline.slogan}}</td>
+        <td>{{airline.head_quaters}}</td>
+        <td class="website"><a class="text-decoration-none" href="">{{airline.website}}</a></td>
+        <td>{{airline.established}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  

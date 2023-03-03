@@ -1,0 +1,29 @@
+<div class="container p-5">
+    <div>
+        <h4>Add Profile</h4>
+    </div>
+    <form (ngSubmit)="onsubmit()" class="p-2">
+        <span>Text</span>
+        <input class="ms-3" type="text" class="form-control" name="text" [(ngModel)]="payload.text">
+        <br>
+        <span>Image</span>
+        <input class="ms-4" type="text" class="form-control" name="image" [(ngModel)]="payload.image">
+        <br>
+        <span>Likes</span>
+        <input class="ms-4" type="number" class="form-control" name="likes" [(ngModel)]="payload.likes">
+        <br>
+        <span>Tags</span>
+        <input class="ms-4" type="text" class="form-control" name="tags[]" [(ngModel)]="payload.tags">
+        <br>
+        <label>Owner</label>
+        <select class="form-control" name="owner" [(ngModel)]="payload.owner"
+            (ngModelChange)="isOwnerEmpty = !payload.owner">
+            <option *ngFor="let owner of ownersList" value="{{ owner.id }}"> {{ owner.firstName + " " +
+                owner.lastName }} </option>
+        </select>
+
+        <div class="mt-5">
+            <button type="submit" class="btn btn-success" [disabled]="isOwnerEmpty">Add Profile</button>
+        </div>
+    </form>
+</div>

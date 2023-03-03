@@ -1,0 +1,13 @@
+.logo{
+    height: 30px;
+    width: 100px;
+}
+
+.bordered {
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+
+  .table-row:nth-child(even) {
+    background-color: #f2f2f2;
+  }
